@@ -24,6 +24,7 @@ grid on
 xlabel('\delta [\circ]');
 ylabel('\delta_h [mm]');
 grid on
+close
 
 %% Dynamika układu
 % Deklaracja danych
@@ -59,7 +60,7 @@ xlabel('\delta [\circ]');
 ylabel('R_B/v^2 [N/(m/s)^2]');
 axis([-pi/6 pi/6 -0.02 0.02])
 grid on
-
+close
 
 %% Siłownik
 
