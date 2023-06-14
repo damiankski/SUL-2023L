@@ -7,14 +7,14 @@ close; %zamyka wszystkie okna
 L = 180;    % mm
 R=100;      % mm
 Y=180;      % mm
-alpha=asin(R/(2*L));
-alpha_prim=pi/2 - alpha;
-delta_max = 25;
+alpha=asin(R/(2*L));      %rad
+alpha_prim=pi/2 - alpha;  %rad
+delta_max = 25;           % stopnie
 
 % określenie wektora wychylenia steru
 delta=-delta_max:0.1:delta_max;
 
-% zamiana wychyelnia steru na wysunięcie siłownika
+% zamiana wychyelnia steru na wysunięcie siłownika [mm]
 delta_h = -(Y-sqrt(L^2+R^2-2*L*R*cos(alpha_prim-delta*pi/180)));
 
 % Wykres wydłużenia siłownika w funkcji kąta wychylenia steru
@@ -38,10 +38,11 @@ wsp1 = 0.5*rho * c^2 * b;  % współczynnik wymiarujący moment zawiasowy-
 V = (0.1*v_dzwieku:10:0.8*v_dzwieku)';
 
 % Zebranie charakterystyk aerodynamicznych z programu X-FOIL
-delta_dyn = [-25, -20, -10, 0, 10, 20, 25];
-delta_dyn = deg2rad(delta_dyn);
+delta_dyn = [-25, -20, -10, 0, 10, 20, 25]; % stopnie
+delta_dyn = deg2rad(delta_dyn); % rad
+
 cm_h = [-0.033139, -0.027379, -0.017291, -0.000038, 0.017291, 0.027379, 0.033139];
-M_h = wsp1*cm_h;
+M_h = wsp1*cm_h; 
 
 %Określenie obciążenia na siłowniku
 delta_h_dyn = -(Y-sqrt(L^2+R^2-2*L*R.*cos(alpha_prim-delta_dyn)));
@@ -49,7 +50,7 @@ beta = acos((R^2 +delta_h_dyn.*(delta_h_dyn+2*L))./(2*R*(L+delta_h_dyn))) - pi/2
 R_B = M_h./(R*cos(beta));
 
  % wyjściowa tablica do modelu w Simulink
-Q = V.^2*R_B;     
+Q = V.^2*R_B;  % N
 
 % utworzenie siatki pod wizualizację 3D
 [X,Y] = meshgrid(delta_dyn, V);   
@@ -93,5 +94,5 @@ xp_0 = 0;             % m/s
 %% Dane wejściowe
 
 v_lotu = 0.5*340;     % m/s
-kat_wychylenia =7;   % stopnie
+kat_wychylenia =7;    % stopnie
 czas_wymuszenia = 8;  % s
